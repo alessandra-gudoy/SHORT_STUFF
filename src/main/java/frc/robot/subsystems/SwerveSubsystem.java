@@ -4,9 +4,12 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -16,6 +19,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LandingGearConsts;
+import frc.robot.Constants.ShuffleboardTabs;
 import frc.robot.Constants.SwerveConsts;
 
 public class SwerveSubsystem extends SubsystemBase {
@@ -25,6 +29,9 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule frontRight;
 
     private AHRS navx;
+
+    private SwerveModulePosition[] positions = {frontLeft.getPosition(), backLeft.getPosition(), frontRight.getPosition(), backRight.getPosition()};
+    private SwerveDriveOdometry odometer;
 
     private DoubleSolenoid landinator;
     private CANSparkMax wheelinator;
@@ -43,6 +50,8 @@ public class SwerveSubsystem extends SubsystemBase {
                 SwerveConsts.FR_ABSOLUTE_ENCODER_PORT, SwerveConsts.FR_OFFSET, false, true, true);
 
         navx = new AHRS(SPI.Port.kMXP);
+
+        odometer = new SwerveDriveOdometry(SwerveConsts.DRIVE_KINEMATICS, getRotation2d(), positions);
 
         /* * * Landing Gear * * */
         landinator = new DoubleSolenoid(PneumaticsModuleType.REVPH,
@@ -228,8 +237,22 @@ public class SwerveSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("[S] Yaw", getYaw());
-        SmartDashboard.putBoolean("connection", navx.isConnected());
         SmartDashboard.putNumber("[S] Pitch", getPitch());
         SmartDashboard.putNumber("[S] Timer Class", Timer.getMatchTime());
+
+        ShuffleboardTabs.AUTO.addString("Robot Location",  () -> getPose().getTranslation().toString());
+
+        odometer.update(getRotation2d(), positions);
+    }
+
+    // ODOMETRY
+
+    // Pose2d = Translation2D + Rotation 2D
+    public Pose2d getPose(){
+        return odometer.getPoseMeters();
+    }
+
+    public void resetOdometry(Pose2d pose){
+        odometer.resetPosition(getRotation2d(), positions, pose);
     }
 }
