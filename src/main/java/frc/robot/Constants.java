@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.math.geometry.Translation2d;
 
 public final class Constants {
@@ -108,6 +109,13 @@ public final class Constants {
   public static class AutoConsts {
     public static final double DRIVE_TRANSLATION_SPEED = 0.2;
     public static final double DRIVE_ROTATION_SPEED = 0.25;
+  }
+
+  public static class ShuffleboardTabs{
+    public static final ShuffleboardTab PIT_CHECKS_TAB = Shuffleboard.getTab("PIT");
+    public static final ShuffleboardTab DRIVERS_VIEW = Shuffleboard.getTab("DRIVER");
+
+    public static final ShuffleboardTab AUTO = Shuffleboard.getTab("AUTOS");
   }
 
 }
