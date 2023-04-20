@@ -153,6 +153,7 @@ public class RobotContainer {
     angleController.enableContinuousInput(-Math.PI, Math.PI);
 
     // Command to follow trajectory
+    // :: => shorthand for lambda for calling specific method (method reference operator)
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
       trajectory, 
       swerveSubsystem::getPose,
