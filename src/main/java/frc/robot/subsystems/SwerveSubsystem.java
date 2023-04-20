@@ -249,7 +249,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
         ShuffleboardTabs.AUTO.addString("Robot Location",  () -> getPose().getTranslation().toString());
 
-        odometer.update(getRotation2d(), positions);
+        odometer.update(getRotation2d(), new SwerveModulePosition[] {
+            frontLeft.getPosition(), backLeft.getPosition(), backRight.getPosition(), frontRight.getPosition()
+        });
     }
 
     // ODOMETRY
