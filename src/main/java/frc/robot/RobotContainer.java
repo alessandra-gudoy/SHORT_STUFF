@@ -122,6 +122,7 @@ public class RobotContainer {
     autoChooser.addOption("High ONLY", high);
     autoChooser.addOption("Mixed Balance ONLY", mixedBalance);
 
+    
     autoChooser.addOption("TEST", test());
 
     SmartDashboard.putData(autoChooser);

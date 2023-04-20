@@ -30,7 +30,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     private AHRS navx;
 
-    private SwerveModulePosition[] positions = {frontLeft.getPosition(), backLeft.getPosition(), frontRight.getPosition(), backRight.getPosition()};
+    private SwerveModulePosition[] positions = {frontLeft.getPosition(), backLeft.getPosition(), backRight.getPosition(), frontRight.getPosition()};
     private SwerveDriveOdometry odometer;
 
     private DoubleSolenoid landinator;
@@ -51,7 +51,14 @@ public class SwerveSubsystem extends SubsystemBase {
 
         navx = new AHRS(SPI.Port.kMXP);
 
+        // if new positions don't work
+        // positions[0] = new SwerveModulePosition(0, new Rotation2d(frontLeft.getTurningPosition()));
+        // positions[1] = new SwerveModulePosition(0, new Rotation2d(backLeft.getTurningPosition()));
+        // positions[2] = new SwerveModulePosition(0, new Rotation2d(backRight.getTurningPosition()));
+        // positions[3] = new SwerveModulePosition(0, new Rotation2d(frontRight.getTurningPosition()));
+
         odometer = new SwerveDriveOdometry(SwerveConsts.DRIVE_KINEMATICS, getRotation2d(), positions);
+
 
         /* * * Landing Gear * * */
         landinator = new DoubleSolenoid(PneumaticsModuleType.REVPH,
