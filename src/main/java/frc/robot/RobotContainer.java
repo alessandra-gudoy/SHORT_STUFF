@@ -127,7 +127,7 @@ public class RobotContainer {
 
     SmartDashboard.putData(autoChooser);
   }
-
+  
   public Command test(){
     // Trajectory Settings
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(SwerveConsts.MAX_SPEED, 1)
@@ -169,5 +169,7 @@ public class RobotContainer {
       new InstantCommand( () -> swerveSubsystem.stopModules())
     );
   }
+
+  // raspberry pi done
 
 }
