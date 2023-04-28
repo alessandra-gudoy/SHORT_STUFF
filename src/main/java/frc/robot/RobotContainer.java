@@ -146,10 +146,10 @@ public class RobotContainer {
     );
 
     // Correct errors in trajectory
-    PIDController xController = new PIDController(0.1, 0, 0);
-    PIDController yController = new PIDController(0.1, 0, 0);
-    ProfiledPIDController angleController = new ProfiledPIDController(0.1, 0.0, 0.0, null); // FIXME
-      // like PIDController but adds limit on maximum speed and acceleration
+    PIDController xController = new PIDController(1, 0, 0);
+    PIDController yController = new PIDController(1, 0, 0);
+    ProfiledPIDController angleController = new ProfiledPIDController(1, 0.0, 0.0, null); // FIXME
+    // like PIDController but adds limit on maximum speed and acceleration
     angleController.enableContinuousInput(-Math.PI, Math.PI);
 
     // Command to follow trajectory

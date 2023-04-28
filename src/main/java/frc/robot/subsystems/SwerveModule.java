@@ -104,7 +104,7 @@ public class SwerveModule extends SubsystemBase{
     }
 
     public SwerveModulePosition getPosition(){
-        return new SwerveModulePosition(getDrivePosition(), new Rotation2d(getTurningPosition()));
+        return new SwerveModulePosition(getDrivePosition(), new Rotation2d(getAbsoluteEncoder()));
     }
 
     // set turning enc to value of absolute encoder
