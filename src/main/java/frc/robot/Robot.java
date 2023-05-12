@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    if(Timer.getMatchTime() < 0.75){
+    if(Timer.getMatchTime() > 0 && Timer.getMatchTime() < 0.75){
       m_autonomousCommand.cancel();
       lockSwerveCommand.schedule();
     }

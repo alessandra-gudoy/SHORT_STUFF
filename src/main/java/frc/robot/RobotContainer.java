@@ -21,6 +21,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -129,6 +130,7 @@ public class RobotContainer {
   }
   
   public Command test(){
+    SmartDashboard.putString("Current Command", "Running");
     // Trajectory Settings
     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(SwerveConsts.MAX_SPEED, 1)
         .setKinematics(SwerveConsts.DRIVE_KINEMATICS);
@@ -138,17 +140,16 @@ public class RobotContainer {
     // interior point = points to go through
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)), 
         List.of(
-          new Translation2d(1, 0),
-          new Translation2d(1, 1)
+          new Translation2d(100, 0)
         ),
-        new Pose2d(2, 1, Rotation2d.fromDegrees(180)),
+        new Pose2d(200, 0, Rotation2d.fromDegrees(0)),
         trajectoryConfig
     );
 
     // Correct errors in trajectory
-    PIDController xController = new PIDController(1, 0, 0);
-    PIDController yController = new PIDController(1, 0, 0);
-    ProfiledPIDController angleController = new ProfiledPIDController(1, 0.0, 0.0, null); // FIXME
+    PIDController xController = new PIDController(0.01, 0, 0);
+    PIDController yController = new PIDController(0.01, 0, 0);
+    ProfiledPIDController angleController = new ProfiledPIDController(0.01, 0.0, 0.0, new Constraints(SwerveConsts.MAX_ROTATION, 1)); // FIXME
     // like PIDController but adds limit on maximum speed and acceleration
     angleController.enableContinuousInput(-Math.PI, Math.PI);
 
@@ -168,6 +169,7 @@ public class RobotContainer {
       swerveControllerCommand,
       new InstantCommand( () -> swerveSubsystem.stopModules())
     );
+
   }
 
 

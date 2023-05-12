@@ -45,6 +45,7 @@ public class SwerveModule extends SubsystemBase{
         this.encoderOffset = encoderOffset;
         this.encoderReversed = encoderReversed;
         
+        //18 inches / 27 encoder counts
         turningEnc.setPositionConversionFactor(SwerveConsts.TURNING_ENCODER_ROTATION_CONVERSION);
         turningEnc.setVelocityConversionFactor(SwerveConsts.TURNING_ENCODER_SPEED_CONVERSION);
         drivingEnc.setPositionConversionFactor(SwerveConsts.DRIVE_ENCODER_ROTATION_CONVERSION);

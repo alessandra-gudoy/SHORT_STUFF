@@ -252,6 +252,8 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("[S] Timer Class", Timer.getMatchTime());
 
         SmartDashboard.putString("Robot Location",  getPose().getTranslation().toString());
+        SmartDashboard.putString("Robot Rotation",  getPose().getRotation().toString());
+
 
         odometer.update(getRotation2d(), new SwerveModulePosition[] {
             frontLeft.getPosition(), backLeft.getPosition(), backRight.getPosition(), frontRight.getPosition()
