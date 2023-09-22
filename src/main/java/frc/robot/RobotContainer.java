@@ -164,6 +164,7 @@ public class RobotContainer {
       swerveSubsystem
       );
 
+    // Complete command of actually moving the robot
     return new SequentialCommandGroup(
       new InstantCommand( () -> swerveSubsystem.resetOdometry(trajectory.getInitialPose()) ),
       swerveControllerCommand,
